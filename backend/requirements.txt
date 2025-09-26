@@ -54,3 +54,4 @@ vine==5.1.0
 wcwidth==0.2.14
 wheel==0.45.1
 pymysql==1.1.1
+gunicorn==22.0.0
