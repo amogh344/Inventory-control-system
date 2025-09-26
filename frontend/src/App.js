@@ -1,24 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute'; 
+import Layout from './components/layout/Layout';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import ProductsPage from './pages/ProductsPage';
+import SuppliersPage from './pages/SuppliersPage';
+import PurchaseOrdersPage from './pages/PurchaseOrdersPage';
+import CreatePurchaseOrderPage from './pages/CreatePurchaseOrderPage';
+import SalesOrdersPage from './pages/SalesOrdersPage';
+import CreateSalesOrderPage from './pages/CreateSalesOrderPage';
+import ReportsPage from './pages/ReportsPage';
+import ProfilePage from './pages/ProfilePage';
+import RequestPasswordResetPage from './pages/RequestPasswordResetPage'; 
+import ConfirmPasswordResetPage from './pages/ConfirmPasswordResetPage'; 
+import InvoicePage from './pages/InvoicePage';
+import AuditTrailPage from './pages/AuditTrailPage';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+          <Route path="/forgot-password" element={<PublicRoute><RequestPasswordResetPage /></PublicRoute>} />
+          <Route path="/reset-password/:token" element={<PublicRoute><ConfirmPasswordResetPage /></PublicRoute>} />
+          
+          <Route path="/sales-orders/:id/invoice" element={<ProtectedRoute><InvoicePage /></ProtectedRoute>} />
+
+          {/* Protected Routes */}
+          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+            <Route index element={<DashboardPage />} />
+            <Route path="products" element={<ProductsPage />} />
+            <Route path="suppliers" element={<SuppliersPage />} />
+            <Route path="purchase-orders" element={<PurchaseOrdersPage />} />
+            <Route path="purchase-orders/create" element={<CreatePurchaseOrderPage />} />
+            <Route path="sales-orders" element={<SalesOrdersPage />} />
+            <Route path="sales-orders/create" element={<CreateSalesOrderPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+            <Route path="audit-trail" element={<AuditTrailPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
