@@ -1,4 +1,3 @@
-
 """
 Django settings for backend project.
 
@@ -14,25 +13,22 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import environ 
-# backend/settings.py
-import sys # 👈 Add this import
+import sys
 
+# ============================================================================
+#  BASE DIRECTORY & PATH CONFIGURATION
+# ============================================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 👇 Add this line to tell Django where to find your 'inventory' app
+# Add the project root to the Python path for Vercel deployment
 sys.path.insert(0, os.path.join(BASE_DIR))
-# ============================================================================
-#  BASE DIRECTORY
-# ============================================================================
 
 # ============================================================================
 #  ENVIRON INITIALIZATION
 # ============================================================================
 env = environ.Env(
-    # set casting, default value
     DEBUG=(bool, False)
 )
-# reading .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # ============================================================================
@@ -40,9 +36,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # ============================================================================
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
+
+# This now correctly reads the list of allowed hosts from your .env file or Vercel variables
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'])
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=['http://localhost:3000'])
-CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://localhost:3000'])
 
 # ============================================================================
 #  APPLICATION DEFINITION
@@ -61,11 +57,10 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
 ]
 
-# Custom user model
 AUTH_USER_MODEL = 'inventory.User'
 
 # ============================================================================
-#  MIDDLEWARE
+#  MIDDLEWARE & CORS
 # ============================================================================
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', 
@@ -78,6 +73,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# These correctly read from your .env file or Vercel variables
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=['http://localhost:3000'])
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://localhost:3000'])
 
 # ============================================================================
 #  REST FRAMEWORK CONFIGURATION
@@ -94,13 +92,9 @@ REST_FRAMEWORK = {
 }
 
 # ============================================================================
-#  URL CONFIGURATION
+#  URLS, TEMPLATES, and WSGI
 # ============================================================================
 ROOT_URLCONF = 'backend.urls'
-
-# ============================================================================
-#  TEMPLATES
-# ============================================================================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -115,7 +109,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 # ============================================================================
@@ -126,39 +119,13 @@ DATABASES = {
 }
 
 # ============================================================================
-#  PASSWORD VALIDATION (COMMENTED OUT)
-# ============================================================================
-# AUTH_PASSWORD_VALIDATORS = [
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-#     },
-# ]
-
-# ============================================================================
-#  INTERNATIONALIZATION
+#  INTERNATIONALIZATION & STATIC FILES
 # ============================================================================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I1N = True
 USE_TZ = True
-
-# ============================================================================
-#  STATIC FILES
-# ============================================================================
 STATIC_URL = 'static/'
-
-# ============================================================================
-#  DEFAULT PRIMARY KEY FIELD TYPE
-# ============================================================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ============================================================================
@@ -167,4 +134,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True                                                                                                                 
+EMAIL_USE_TLS = True
+
