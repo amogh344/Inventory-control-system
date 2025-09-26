@@ -14,11 +14,16 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import environ 
+# backend/settings.py
+import sys # 👈 Add this import
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# 👇 Add this line to tell Django where to find your 'inventory' app
+sys.path.insert(0, os.path.join(BASE_DIR))
 # ============================================================================
 #  BASE DIRECTORY
 # ============================================================================
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ============================================================================
 #  ENVIRON INITIALIZATION
