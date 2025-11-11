@@ -183,11 +183,3 @@ Amogh Brahma R
 	•	📊 Integrate analytics dashboards using Chart.js or PowerBI.
 
 ⸻
-
-“Inventory is not just about counting products — it’s about controlling growth.”
-— Amogh Brahma R
-
----
-
-Would you like me to make a **slightly shorter README (1-page)** for recruiters (focused on achievements + demo)  
-or keep this **detailed one (developer-oriented)** for GitHub?
