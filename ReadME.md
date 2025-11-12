@@ -1,8 +1,3 @@
-Perfect 👌 — that’s the right move, Amogh.
-A clean README.md is your project’s résumé — it’s the first thing recruiters, interviewers, and collaborators read.
-
-Below is a ready-to-use README written in professional GitHub style, tailored exactly for your Inventory Control System project (the one we just rebuilt).
-You can copy this directly into a file named README.md in the project root.
 
 ⸻
 
